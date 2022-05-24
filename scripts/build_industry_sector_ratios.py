@@ -1471,7 +1471,7 @@ if __name__ == "__main__":
     df = pd.concat(
         [
             iron_and_steel(),
-            chemicals_industry(),
+            #chemicals_industry(),
             nonmetalic_mineral_products(),
             pulp_paper_printing(),
             food_beverages_tobacco(),

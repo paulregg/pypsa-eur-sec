@@ -167,13 +167,26 @@ rule build_heat_demands:
         pop_layout_rural="resources/pop_layout_rural.nc",
         regions_onshore=pypsaeur("resources/regions_onshore_elec_s{simpl}_{clusters}.geojson")
     output:
-        heat_demand_urban="resources/heat_demand_urban_elec_s{simpl}_{clusters}.nc",
-        heat_demand_rural="resources/heat_demand_rural_elec_s{simpl}_{clusters}.nc",
-        heat_demand_total="resources/heat_demand_total_elec_s{simpl}_{clusters}.nc"
+        heat_demand_urban_unscaled="resources/heat_demand_urban_elec_s{simpl}_{clusters}_unscaled.nc",
+        heat_demand_rural_unscaled="resources/heat_demand_rural_elec_s{simpl}_{clusters}_unscaled.nc",
+        heat_demand_total_unscaled="resources/heat_demand_total_elec_s{simpl}_{clusters}_unscaled.nc"
     resources: mem_mb=20000
     benchmark: "benchmarks/build_heat_demands/s{simpl}_{clusters}"
     script: "scripts/build_heat_demand.py"
 
+rule scale_heat_demands:
+    input:
+        heat_demand_urban_unscaled="resources/heat_demand_urban_elec_s{simpl}_{clusters}_unscaled.nc",
+        heat_demand_rural_unscaled="resources/heat_demand_rural_elec_s{simpl}_{clusters}_unscaled.nc",
+        heat_demand_total_unscaled="resources/heat_demand_total_elec_s{simpl}_{clusters}_unscaled.nc"
+    output:
+        heat_demand_urban="resources/heat_demand_urban_elec_s{simpl}_{clusters}.nc",
+        heat_demand_rural="resources/heat_demand_rural_elec_s{simpl}_{clusters}.nc",
+        heat_demand_total="resources/heat_demand_total_elec_s{simpl}_{clusters}.nc"
+    threads: 1 
+    resources: mem_mb=2000
+    benchmark: "benchmarks/scale_heat_demands/s{simpl}_{clusters}"
+    script: "scripts/scale_heat_demand.py"
 
 rule build_temperature_profiles:
     input:
@@ -375,12 +388,21 @@ rule build_industrial_energy_demand_per_node:
         industrial_production_per_node="resources/industrial_production_elec_s{simpl}_{clusters}_{planning_horizons}.csv",
         industrial_energy_demand_per_node_today="resources/industrial_energy_demand_today_elec_s{simpl}_{clusters}.csv"
     output:
+        industrial_energy_demand_per_node_unscaled="resources/unscaled_industrial_energy_demand_elec_s{simpl}_{clusters}_{planning_horizons}.csv"
+    threads: 1
+    resources: mem_mb=1000
+    benchmark: "benchmarks/build_industrial_energy_demand_per_node/s{simpl}_{clusters}_{planning_horizons}_unscaled"
+    script: 'scripts/build_industrial_energy_demand_per_node.py'
+
+rule scale_industrial_energy_demand_per_node:
+    input:
+        industrial_energy_demand_per_node_unscaled="resources/unscaled_industrial_energy_demand_elec_s{simpl}_{clusters}_{planning_horizons}.csv"
+    output:
         industrial_energy_demand_per_node="resources/industrial_energy_demand_elec_s{simpl}_{clusters}_{planning_horizons}.csv"
     threads: 1
     resources: mem_mb=1000
     benchmark: "benchmarks/build_industrial_energy_demand_per_node/s{simpl}_{clusters}_{planning_horizons}"
-    script: 'scripts/build_industrial_energy_demand_per_node.py'
-
+    script: 'scripts/scale_industrial_energy_demand_per_node.py'
 
 rule build_industrial_energy_demand_per_country_today:
     input:
@@ -450,14 +472,28 @@ rule build_transport_demand:
         traffic_data_Pkw="data/emobility/Pkw__count",
         temp_air_total="resources/temp_air_total_elec_s{simpl}_{clusters}.nc",
     output: 
+        transport_demand_unscaled="resources/transport_demand_s{simpl}_{clusters}_unscaled.csv",
+        transport_data_unscaled="resources/transport_data_s{simpl}_{clusters}_unscaled.csv",
+        avail_profile_unscaled="resources/avail_profile_s{simpl}_{clusters}_unscaled.csv",
+        dsm_profile_unscaled="resources/dsm_profile_s{simpl}_{clusters}_unscaled.csv"
+    threads: 1
+    resources: mem_mb=2000
+    script: "scripts/build_transport_demand.py"
+
+rule scale_transport_demand:
+    input:
+        transport_demand_unscaled="resources/transport_demand_s{simpl}_{clusters}_unscaled.csv",
+        transport_data_unscaled="resources/transport_data_s{simpl}_{clusters}_unscaled.csv",
+        avail_profile_unscaled="resources/avail_profile_s{simpl}_{clusters}_unscaled.csv",
+        dsm_profile_unscaled="resources/dsm_profile_s{simpl}_{clusters}_unscaled.csv"
+    output:
         transport_demand="resources/transport_demand_s{simpl}_{clusters}.csv",
         transport_data="resources/transport_data_s{simpl}_{clusters}.csv",
         avail_profile="resources/avail_profile_s{simpl}_{clusters}.csv",
         dsm_profile="resources/dsm_profile_s{simpl}_{clusters}.csv"
     threads: 1
-    resources: mem_mb=2000
-    script: "scripts/build_transport_demand.py"
-
+    resources: mem_mb = 2000
+    script: "scripts/scale_transport_demand.py"
 
 rule prepare_sector_network:
     input:
