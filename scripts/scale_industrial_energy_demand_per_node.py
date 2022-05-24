@@ -1,9 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Tue May 24 09:43:51 2022
-
-@author: Paul
+scale (and possibly reshape) the default industry demand time series
 """
 
 import shutil

@@ -1,9 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Tue May 24 09:53:58 2022
-
-@author: Paul
+scale (and maybe reshape) the default transport data
 """
 
 import shutil
