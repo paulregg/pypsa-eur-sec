@@ -1,0 +1,175 @@
+cluster,,,37
+lv,,,1.5
+opt,,,Co2L0-24H-T-H-B-I-A-solar+p3-dist1
+planning_horizon,,,2030
+generators,capital,gas,0.0
+generators,capital,offwind-ac,4876825784.526437
+generators,capital,offwind-dc,27102758267.42041
+generators,capital,oil,0.0
+generators,capital,onwind,130332054285.32663
+generators,capital,residential rural solar thermal,8400.733424320511
+generators,capital,residential urban decentral solar thermal,9627.63254061414
+generators,capital,ror,12159314438.330399
+generators,capital,services rural solar thermal,8500.695108912108
+generators,capital,services urban decentral solar thermal,9844.861508719674
+generators,capital,solar,198531371888.71356
+generators,capital,solar rooftop,20568257023.034264
+generators,capital,urban central solar thermal,60067496.79915277
+generators,marginal,gas,700405587.7470491
+generators,marginal,offwind-ac,2157376.9700244726
+generators,marginal,offwind-dc,12773442.046792937
+generators,marginal,oil,7839563005.4039345
+generators,marginal,onwind,78436974.50931628
+generators,marginal,residential rural solar thermal,1.0824830933966219
+generators,marginal,residential urban decentral solar thermal,1.3304311494501284
+generators,marginal,ror,1659309.2744899988
+generators,marginal,services rural solar thermal,1.096043189587146
+generators,marginal,services urban decentral solar thermal,1.3612823567802914
+generators,marginal,solar,104543267.48869734
+generators,marginal,solar rooftop,11085603.397282502
+generators,marginal,urban central solar thermal,27631.640655126164
+lines,capital,AC,6112324786.752091
+links,capital,BEV charger,0.0
+links,capital,DAC,13599490917.452696
+links,capital,DC,4916373285.60454
+links,capital,Fischer-Tropsch,41471884516.41962
+links,capital,H2 Electrolysis,46867431965.77679
+links,capital,H2 Fuel Cell,6787.479654627574
+links,capital,H2 pipeline,4583492339.055481
+links,capital,OCGT,747668782.8982795
+links,capital,SMR,3544.253728411869
+links,capital,SMR CC,4156.384977339965
+links,capital,Sabatier,3913087086.6259785
+links,capital,V2G,0.0
+links,capital,battery charger,8383.424249529602
+links,capital,battery discharger,0.0
+links,capital,biogas to gas,1970373835.143308
+links,capital,co2 vent,0.0
+links,capital,electricity distribution grid,35613177406.12017
+links,capital,gas for industry,0.0
+links,capital,gas for industry CC,2912461233.671673
+links,capital,helmeth,10398.290975341062
+links,capital,home battery charger,9003.610903661869
+links,capital,home battery discharger,0.0
+links,capital,process emissions,0.0
+links,capital,process emissions CC,5252192114.176639
+links,capital,residential rural gas boiler,1353705897.7251222
+links,capital,residential rural ground heat pump,16199520134.195923
+links,capital,residential rural resistive heater,306147025.87385374
+links,capital,residential rural water tanks charger,0.0
+links,capital,residential rural water tanks discharger,0.0
+links,capital,residential urban decentral air heat pump,15711450044.40801
+links,capital,residential urban decentral gas boiler,4777072284.866265
+links,capital,residential urban decentral resistive heater,438272652.92166686
+links,capital,residential urban decentral water tanks charger,0.0
+links,capital,residential urban decentral water tanks discharger,0.0
+links,capital,services rural gas boiler,536811726.94436646
+links,capital,services rural ground heat pump,9625155925.847733
+links,capital,services rural resistive heater,122505122.31954953
+links,capital,services rural water tanks charger,0.0
+links,capital,services rural water tanks discharger,0.0
+links,capital,services urban decentral air heat pump,6862415591.534157
+links,capital,services urban decentral gas boiler,1851438436.631639
+links,capital,services urban decentral resistive heater,164979386.42979306
+links,capital,services urban decentral water tanks charger,0.0
+links,capital,services urban decentral water tanks discharger,0.0
+links,capital,solid biomass for industry,0.0
+links,capital,solid biomass for industry CC,8047632354.587926
+links,capital,urban central air heat pump,19179705408.874878
+links,capital,urban central gas CHP,5924959929.182579
+links,capital,urban central gas CHP CC,8428.107604633085
+links,capital,urban central gas boiler,1532402032.001469
+links,capital,urban central resistive heater,514567562.5962859
+links,capital,urban central solid biomass CHP,7647.672932516226
+links,capital,urban central solid biomass CHP CC,13943409300.17821
+links,capital,urban central water tanks charger,0.0
+links,capital,urban central water tanks discharger,0.0
+links,marginal,BEV charger,8379648.66649357
+links,marginal,DAC,1226849.0377047765
+links,marginal,DC,-2269417.1703569097
+links,marginal,Fischer-Tropsch,16850758.8560442
+links,marginal,H2 Electrolysis,48673499.3652193
+links,marginal,H2 Fuel Cell,1.1554931157629431
+links,marginal,H2 pipeline,-3676151.1044077785
+links,marginal,OCGT,6898636.980413777
+links,marginal,SMR,0.4096422154662023
+links,marginal,SMR CC,0.9623005010272448
+links,marginal,Sabatier,5520853.074993823
+links,marginal,V2G,1804.6669329772685
+links,marginal,battery charger,11.743642735560856
+links,marginal,battery discharger,11.475274262911656
+links,marginal,biogas to gas,1072949706.7288963
+links,marginal,co2 vent,0.004983227246307263
+links,marginal,electricity distribution grid,49653270.062954806
+links,marginal,gas for industry,0.03482711623662751
+links,marginal,gas for industry CC,4088503.6985001964
+links,marginal,helmeth,2.0849647409472216
+links,marginal,home battery charger,9.131293858081902
+links,marginal,home battery discharger,8.962696883690546
+links,marginal,process emissions,0.004760574135650597
+links,marginal,process emissions CC,1606618.8618365207
+links,marginal,residential rural gas boiler,137372.53594107492
+links,marginal,residential rural ground heat pump,1425340.9921071061
+links,marginal,residential rural resistive heater,114111.61674184592
+links,marginal,residential rural water tanks charger,342.042851064751
+links,marginal,residential rural water tanks discharger,284.7950769308015
+links,marginal,residential urban decentral air heat pump,2249735.3704280434
+links,marginal,residential urban decentral gas boiler,681734.6677087878
+links,marginal,residential urban decentral resistive heater,295588.2894458626
+links,marginal,residential urban decentral water tanks charger,311.88124398638155
+links,marginal,residential urban decentral water tanks discharger,267.79198567370696
+links,marginal,services rural gas boiler,53651.01086436661
+links,marginal,services rural ground heat pump,1054005.0360250715
+links,marginal,services rural resistive heater,51669.95518393139
+links,marginal,services rural water tanks charger,349.3909467013193
+links,marginal,services rural water tanks discharger,294.14336009265037
+links,marginal,services urban decentral air heat pump,1033404.1441119546
+links,marginal,services urban decentral gas boiler,263169.8215477111
+links,marginal,services urban decentral resistive heater,109717.17576899976
+links,marginal,services urban decentral water tanks charger,325.48047351720237
+links,marginal,services urban decentral water tanks discharger,270.48912089700866
+links,marginal,solid biomass for industry,0.02869507834935402
+links,marginal,solid biomass for industry CC,8090229.296187087
+links,marginal,urban central air heat pump,3289510.495097659
+links,marginal,urban central gas CHP,612041338.7925923
+links,marginal,urban central gas CHP CC,662.7312355837189
+links,marginal,urban central gas boiler,1537289.7009316245
+links,marginal,urban central resistive heater,1187556.846113282
+links,marginal,urban central solid biomass CHP,280.06348257353943
+links,marginal,urban central solid biomass CHP CC,478446457.90227
+links,marginal,urban central water tanks charger,143860.95407050868
+links,marginal,urban central water tanks discharger,127889.17136560637
+storage_units,capital,PHS,9942295736.372314
+storage_units,capital,hydro,15631026640.350954
+storage_units,marginal,PHS,201742.1125551138
+storage_units,marginal,hydro,3323304.201179293
+stores,capital,H2,4381131946.531858
+stores,capital,Li ion,0.0
+stores,capital,battery,8519.346090030454
+stores,capital,biogas,0.0
+stores,capital,co2,0.0
+stores,capital,co2 stored,2000000000.2551942
+stores,capital,gas,0.0
+stores,capital,home battery,7628.55273104362
+stores,capital,oil,0.0
+stores,capital,residential rural water tanks,6409.770943822541
+stores,capital,residential urban decentral water tanks,6260.036838496906
+stores,capital,services rural water tanks,6412.81765060642
+stores,capital,services urban decentral water tanks,6288.633355748654
+stores,capital,solid biomass,0.0
+stores,capital,urban central water tanks,12331363.902487302
+stores,marginal,H2,1.6234824664652054e-11
+stores,marginal,Li ion,-8.193964409146683e-12
+stores,marginal,battery,5.647487175620396e-19
+stores,marginal,biogas,19847194393.898415
+stores,marginal,co2,-0.000714450869819719
+stores,marginal,co2 stored,-2158526.1908151386
+stores,marginal,gas,0.0
+stores,marginal,home battery,1.2492847886961537e-19
+stores,marginal,oil,0.0
+stores,marginal,residential rural water tanks,-0.0942122093852455
+stores,marginal,residential urban decentral water tanks,-0.08997714436741394
+stores,marginal,services rural water tanks,-0.09533298878752358
+stores,marginal,services urban decentral water tanks,-0.09091942002655026
+stores,marginal,solid biomass,26157054211.019375
+stores,marginal,urban central water tanks,-90.85200713352796

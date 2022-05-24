@@ -1,0 +1,112 @@
+cluster,,37
+lv,,1.5
+opt,,Co2L0-24H-T-H-B-I-A-solar+p3-dist1
+planning_horizon,,2030
+generators,gas,34829290.63865498
+generators,offwind-ac,86959851.28164913
+generators,offwind-dc,526169464.5622532
+generators,oil,156759789.72312808
+generators,onwind,3161547327.0286255
+generators,residential rural solar thermal,108.7762236905365
+generators,residential urban decentral solar thermal,132.06956124746935
+generators,ror,172793923.19867828
+generators,services rural solar thermal,109.9258153356012
+generators,services urban decentral solar thermal,137.57817271975625
+generators,solar,5314048058.682144
+generators,solar rooftop,554129960.032216
+generators,urban central solar thermal,2577891.1614194224
+lines,AC,0.0
+links,BEV charger,-86764479.75241435
+links,DAC,-270066720.64143133
+links,DC,0.0
+links,Fischer-Tropsch,-404219314.1228644
+links,H2 Electrolysis,-1528587494.045753
+links,H2 Fuel Cell,-5.7955816492701615
+links,H2 pipeline,0.0
+links,OCGT,-1450873.4683563958
+links,SMR,-1.6411368562934232
+links,SMR CC,-10.34254196420034
+links,Sabatier,-209803926.05247226
+links,V2G,-18032.328075441765
+links,battery charger,-23.86235669403345
+links,battery discharger,-23.380256810072524
+links,biogas to gas,-67267838.72945796
+links,co2 vent,0.0
+links,electricity distribution grid,0.0
+links,gas for industry,0.773070799279958
+links,gas for industry CC,42365555.126302935
+links,helmeth,-76.1206078255504
+links,home battery charger,-18.425552774827565
+links,home battery discharger,-18.05329807724968
+links,process emissions,0.0
+links,process emissions CC,0.0
+links,residential rural gas boiler,2483902.857063784
+links,residential rural ground heat pump,332093335.27165097
+links,residential rural resistive heater,-1146692.1153219994
+links,residential rural water tanks charger,-5476.525815261477
+links,residential rural water tanks discharger,-4598.767306161884
+links,residential urban decentral air heat pump,309710477.1834048
+links,residential urban decentral gas boiler,12401817.762301577
+links,residential urban decentral resistive heater,-2928884.7543181553
+links,residential urban decentral water tanks charger,-5024.844656259491
+links,residential urban decentral water tanks discharger,-4219.415332882847
+links,services rural gas boiler,937478.9147062957
+links,services rural ground heat pump,260236042.47539765
+links,services rural resistive heater,-523004.7994676307
+links,services rural water tanks charger,-5615.153907668166
+links,services rural water tanks discharger,-4715.214738834089
+links,services urban decentral air heat pump,145182199.65219492
+links,services urban decentral gas boiler,4605994.226446419
+links,services urban decentral resistive heater,-1093674.4879012275
+links,services urban decentral water tanks charger,-5133.96205210132
+links,services urban decentral water tanks discharger,-4311.06573132813
+links,solid biomass for industry,0.0
+links,solid biomass for industry CC,-78042221.89045382
+links,urban central air heat pump,480010141.2220961
+links,urban central gas CHP,2907763.323025558
+links,urban central gas CHP CC,4.407742467755643
+links,urban central gas boiler,36273570.68369019
+links,urban central resistive heater,-1191960.239109084
+links,urban central solid biomass CHP,-3.011610563492326
+links,urban central solid biomass CHP CC,-2057382.5498051345
+links,urban central water tanks charger,-2433421.368765924
+links,urban central water tanks discharger,-2042619.8106585797
+loads,H2 for industry,-195780000.0
+loads,H2 for shipping,-502844345.71918195
+loads,agriculture electricity,-44861105.05639168
+loads,agriculture heat,-189457576.90336195
+loads,agriculture machinery oil,-86625920.92053285
+loads,agriculture machinery oil emissions,23388998.64854386
+loads,electricity,-1720687554.2226639
+loads,gas for industry,-381290000.0000001
+loads,industry electricity,-1721750000.0
+loads,kerosene for aviation,-612245730.6093862
+loads,land transport EV,-780699994.4976614
+loads,land transport fuel cell,-275541174.5285863
+loads,low-temperature heat for industry,-59080000.00000001
+loads,naphtha for industry,-728419999.9999999
+loads,oil emissions,336499747.26453435
+loads,process emissions,152800000.0
+loads,residential rural heat,-496442250.5646497
+loads,residential urban decentral heat,-629302197.782561
+loads,services rural heat,-187860091.56707722
+loads,services urban decentral heat,-251402217.60459545
+loads,solid biomass for industry,-702380000.0000001
+loads,urban central heat,-1519215116.5428445
+storage_units,PHS,-6795836.026934759
+storage_units,hydro,340094675.2744965
+stores,H2,1.3678799412608633e-09
+stores,Li ion,-7.969447324285284e-10
+stores,battery,5.2909066017292616e-17
+stores,biogas,336339193.64728975
+stores,co2,-0.07202069461345673
+stores,co2 stored,-199999999.9990959
+stores,gas,0.0
+stores,home battery,8.890457814381136e-18
+stores,oil,0.0
+stores,residential rural water tanks,-9.483723631861213
+stores,residential urban decentral water tanks,-9.08689586225872
+stores,services rural water tanks,-9.4847545655562
+stores,services urban decentral water tanks,-9.138259665064282
+stores,solid biomass,1037595191.1245807
+stores,urban central water tanks,-9088.35615667294

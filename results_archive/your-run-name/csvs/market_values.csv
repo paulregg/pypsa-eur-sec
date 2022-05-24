@@ -1,0 +1,21 @@
+cluster,37
+lv,1.5
+opt,Co2L0-3H-T-H-B-I-A-solar+p3-dist1
+planning_horizon,2030
+DC,7.6342542190034965
+H2 Electrolysis,35.124150297546
+H2 Fuel Cell,169.65018532078452
+OCGT,801.5421303722699
+battery charger,40.76929003218451
+battery discharger,90.73642400536801
+electricity distribution grid,78.89970111411147
+helmeth,45.712588794867536
+offwind-ac,66.80833749785369
+offwind-dc,57.65656257790979
+onwind,50.2844944136635
+ror,71.60385640248326
+solar,38.71611626164625
+urban central gas CHP,310.7448516947362
+urban central gas CHP CC,177.85470605815541
+urban central solid biomass CHP,155.21394360788267
+urban central solid biomass CHP CC,153.09397799569118

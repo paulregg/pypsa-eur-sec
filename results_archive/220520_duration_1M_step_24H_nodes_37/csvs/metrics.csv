@@ -1,0 +1,11 @@
+cluster,37
+lv,1.5
+opt,Co2L0-24H-T-H-B-I-A-solar+p3-dist1
+planning_horizon,2030
+line_volume,226872395.22276187
+line_volume_limit,226872415.55645755
+line_volume_AC,160412211.09596354
+line_volume_DC,66460184.12679832
+line_volume_shadow,89.87493337677412
+co2_shadow,440.50658015009293
+total costs,757728189088.1597

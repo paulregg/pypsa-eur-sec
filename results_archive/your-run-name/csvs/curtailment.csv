@@ -1,0 +1,18 @@
+cluster,37
+lv,1.5
+opt,Co2L0-3H-T-H-B-I-A-solar+p3-dist1
+planning_horizon,2030
+carrier,
+gas,-inf
+offwind-ac,7.619
+offwind-dc,2.342
+oil,-inf
+onwind,2.576
+residential rural solar thermal,37.399
+residential urban decentral solar thermal,34.798
+ror,0.036
+services rural solar thermal,37.641
+services urban decentral solar thermal,34.892
+solar,3.29
+solar rooftop,0.007
+urban central solar thermal,4.128

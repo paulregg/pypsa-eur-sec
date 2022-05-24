@@ -1,0 +1,90 @@
+cluster,,37
+lv,,1.5
+opt,,Co2L0-24H-T-H-B-I-A-solar+p3-dist1
+planning_horizon,,2030
+generators,gas,4711.566775564667
+generators,offwind-ac,25868.138083777932
+generators,offwind-dc,127618.7817204284
+generators,oil,20080.372086356427
+generators,onwind,1191469.7516133
+generators,residential rural solar thermal,0.34961986414498974
+generators,residential urban decentral solar thermal,0.393998106598739
+generators,ror,44878.1366272218
+generators,services rural solar thermal,0.3531357652760371
+generators,services urban decentral solar thermal,0.3967508381188432
+generators,solar,4136856.212882641
+generators,solar rooftop,499141.9865343236
+generators,urban central solar thermal,3956.865673407756
+lines,AC,326638.3057975608
+links,BEV charger,2394030.981643599
+links,DAC,15751.829849602414
+links,DC,95651.9167570077
+links,Fischer-Tropsch,223811.05273554317
+links,H2 Electrolysis,1035427.3408031778
+links,H2 Fuel Cell,0.06172568888130026
+links,H2 pipeline,320370.10617762577
+links,OCGT,40438.50208463469
+links,SMR,0.05649578811898937
+links,SMR CC,0.056233234920062276
+links,Sabatier,145912.96713040554
+links,V2G,2394030.981643599
+links,battery charger,0.37888559246313486
+links,battery discharger,0.3866984479045994
+links,biogas to gas,38394.886780688124
+links,co2 vent,8.168785525350115e-05
+links,electricity distribution grid,749680.4704580734
+links,gas for industry,0.00046420347644016147
+links,gas for industry CC,48362.50731641417
+links,helmeth,0.045554463478150814
+links,home battery charger,0.2857197395661664
+links,home battery discharger,0.2916114574525375
+links,process emissions,5.789475471829064e-05
+links,process emissions CC,17442.922617388682
+links,residential rural gas boiler,15319.369761466427
+links,residential rural ground heat pump,32326.079296137068
+links,residential rural resistive heater,36348.8425598927
+links,residential rural water tanks charger,34.19046591603729
+links,residential rural water tanks discharger,28.71851934728344
+links,residential urban decentral air heat pump,47108.15112131118
+links,residential urban decentral gas boiler,54063.68203295304
+links,residential urban decentral resistive heater,52031.079959408926
+links,residential urban decentral water tanks charger,31.34615255619492
+links,residential urban decentral water tanks discharger,26.32918575165198
+links,services rural gas boiler,6074.562364703428
+links,services rural ground heat pump,19206.971801381664
+links,services rural resistive heater,14545.370585799828
+links,services rural water tanks charger,34.85725691744468
+links,services rural water tanks discharger,29.27862096407159
+links,services urban decentral air heat pump,20575.689320895064
+links,services urban decentral gas boiler,20946.287537977296
+links,services urban decentral resistive heater,19593.859047185757
+links,services urban decentral water tanks charger,32.35983060916203
+links,services urban decentral water tanks discharger,27.180578095514523
+links,solid biomass for industry,0.00024026029859669507
+links,solid biomass for industry CC,89089.29550837274
+links,urban central air heat pump,70617.50673122749
+links,urban central gas CHP,216831.78692023244
+links,urban central gas CHP CC,0.08920010672391893
+links,urban central gas boiler,238016.15471176963
+links,urban central resistive heater,77767.2172443789
+links,urban central solid biomass CHP,0.06752430999194915
+links,urban central solid biomass CHP CC,70184.47463891224
+links,urban central water tanks charger,20285.048047852615
+links,urban central water tanks discharger,16973.536289175652
+storage_units,PHS,61896.735
+storage_units,hydro,97312.48590768257
+stores,H2,31257751.20383818
+stores,Li ion,5440979.503735453
+stores,battery,0.6738045227505401
+stores,biogas,336339193.65188366
+stores,co2,41434778.12210251
+stores,co2 stored,200000000.0177798
+stores,gas,13011540837.453785
+stores,home battery,0.42922588647736193
+stores,oil,10681767976.613598
+stores,residential rural water tanks,0.19509122425833791
+stores,residential urban decentral water tanks,0.19216564996362906
+stores,services rural water tanks,0.1951650944061662
+stores,services urban decentral water tanks,0.19298366890159224
+stores,solid biomass,1037595191.1290118
+stores,urban central water tanks,11688.209471822332

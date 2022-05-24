@@ -1,0 +1,29 @@
+cluster,37
+lv,1.5
+opt,Co2L0-24H-T-H-B-I-A-solar+p3-dist1
+planning_horizon,2030
+AC,61.66028823893029
+co2,-440.49666006675943
+co2 stored,-267.37289023749537
+gas,20.109668878830334
+H2,74.98333604341519
+battery,61.64386134983646
+Li ion,74.36126481506803
+residential rural heat,37.79945143948034
+residential rural water tanks,37.848034349573155
+services rural heat,37.881621480194475
+services rural water tanks,37.93511464680159
+residential urban decentral heat,47.62436438459389
+residential urban decentral water tanks,47.946374418486606
+services urban decentral heat,48.10969618227605
+services urban decentral water tanks,48.3827707608513
+urban central heat,40.38322125195486
+urban central water tanks,39.22360618858856
+biogas,99.16062528857312
+solid biomass,86.93678998401391
+solid biomass for industry,56.12848217431041
+gas for industry,93.25663308478198
+oil,50.0100368656667
+process emissions,-319.06876632269604
+low voltage,67.09329409849883
+home battery,67.11127784552173
