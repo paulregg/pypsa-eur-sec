@@ -1,0 +1,8 @@
+WARNING:pypsa.io:The following Load have buses which are not defined:
+Index(['agriculture machinery oil'], dtype='object', name='name')
+INFO:pypsa.io:Imported network elec_s_37_lv2.0__Co2L0-48H-T-H-B-I-A-solar+p3-dist1_2030.nc has buses, carriers, generators, global_constraints, lines, links, loads, storage_units, stores
+INFO:pypsa.linopf:Prepare linear problem
+INFO:pypsa.linopf:Total preparation time: 15.27s
+INFO:pypsa.linopf:Solve linear problem using Gurobi solver
+WARNING:pypsa.linopf:Optimization failed with status warning and termination condition interrupted
+INFO:pypsa.io:Exported network elec_s_37_lv2.0__Co2L0-48H-T-H-B-I-A-solar+p3-dist1_2030.nc has lines, generators, storage_units, stores, links, loads, carriers, buses, global_constraints

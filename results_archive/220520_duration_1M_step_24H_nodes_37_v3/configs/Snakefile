@@ -174,20 +174,6 @@ rule build_heat_demands:
     benchmark: "benchmarks/build_heat_demands/s{simpl}_{clusters}"
     script: "scripts/build_heat_demand.py"
 
-rule scale_heat_demands:
-    input:
-        heat_demand_urban_unscaled="resources/heat_demand_urban_elec_s{simpl}_{clusters}_unscaled.nc",
-        heat_demand_rural_unscaled="resources/heat_demand_rural_elec_s{simpl}_{clusters}_unscaled.nc",
-        heat_demand_total_unscaled="resources/heat_demand_total_elec_s{simpl}_{clusters}_unscaled.nc",
-        heat_demand_scaling="scaling/heat_demand_scaling.csv"
-    output:
-        heat_demand_urban="resources/heat_demand_urban_elec_s{simpl}_{clusters}.nc",
-        heat_demand_rural="resources/heat_demand_rural_elec_s{simpl}_{clusters}.nc",
-        heat_demand_total="resources/heat_demand_total_elec_s{simpl}_{clusters}.nc"
-    threads: 1 
-    resources: mem_mb=2000
-    benchmark: "benchmarks/scale_heat_demands/s{simpl}_{clusters}"
-    script: "scripts/scale_heat_demand.py"
 
 rule build_temperature_profiles:
     input:
@@ -357,16 +343,6 @@ rule build_industrial_production_per_country_tomorrow:
     benchmark: "benchmarks/build_industrial_production_per_country_tomorrow_{planning_horizons}"
     script: 'scripts/build_industrial_production_per_country_tomorrow.py'
 
-rule scale_industrial_production_per_country_tomorrow:
-    input:
-        industrial_production_per_country_tomorrow_unscaled = "resources/unscaled_industrial_production_per_country_tomorrow_{planning_horizons}.csv",
-        industrial_production_scaling = "scaling/industrial_production_scaling.csv"
-    output:
-        industrial_production_per_country_tomorrow="resources/industrial_production_per_country_tomorrow_{planning_horizons}.csv"
-    threads: 1
-    resources: mem_mb = 1000
-    benchmark: "benchmarks/scale_industrial_production_per_country_tomorrow_{planning_horizons}"
-    script: 'scripts/scale_industrial_production_per_country_tomorrow.py'
 
 rule build_industrial_distribution_key:
     input:
@@ -405,15 +381,6 @@ rule build_industrial_energy_demand_per_node:
     benchmark: "benchmarks/build_industrial_energy_demand_per_node/s{simpl}_{clusters}_{planning_horizons}"
     script: 'scripts/build_industrial_energy_demand_per_node.py'
 
-rule scale_industrial_energy_demand_per_node:
-    input:
-        industrial_energy_demand_per_node_unscaled="resources/unscaled_industrial_energy_demand_elec_s{simpl}_{clusters}_{planning_horizons}.csv"
-    output:
-        industrial_energy_demand_per_node="resources/industrial_energy_demand_elec_s{simpl}_{clusters}_{planning_horizons}.csv"
-    threads: 1
-    resources: mem_mb=1000
-    benchmark: "benchmarks/scale_industrial_energy_demand_per_node/s{simpl}_{clusters}_{planning_horizons}"
-    script: 'scripts/scale_industrial_energy_demand_per_node.py'
 
 rule build_industrial_energy_demand_per_country_today:
     input:
@@ -452,7 +419,7 @@ if config["sector"]["retrofitting"]["retro_endogen"]:
             floor_area_missing="data/retro/floor_area_missing.csv",
             clustered_pop_layout="resources/pop_layout_elec_s{simpl}_{clusters}.csv",
             cost_germany="data/retro/retro_cost_germany.csv",
-            window_assumptions="data/retro/window_assumptions.csv"
+            window_assumptions="data/retro/window_assumptions.csv",
         output:
             retro_cost="resources/retro_cost_elec_s{simpl}_{clusters}.csv",
             floor_area="resources/floor_area_elec_s{simpl}_{clusters}.csv"
@@ -473,14 +440,6 @@ rule build_population_weighted_energy_totals:
     resources: mem_mb=2000
     script: "scripts/build_population_weighted_energy_totals.py"
 
-rule scale_pop_weighted_energy_totals:
-    input:
-        pop_weighted_energy_totals_unscaled = "resources/pop_weighted_energy_totals_s{simpl}_{clusters}_unscaled.csv",
-        scaling = "scaling/pop_weighted_energy_totals_scaling.csv"
-    output: "resources/pop_weighted_energy_totals_s{simpl}_{clusters}.csv"
-    threads: 1 
-    resources: mem_mb=1000
-    script: "scripts/scale_pop_weighted_energy_totals.py"
 
 rule build_transport_demand:
     input: 
@@ -489,7 +448,7 @@ rule build_transport_demand:
         transport_data='resources/transport_data.csv',
         traffic_data_KFZ="data/emobility/KFZ__count",
         traffic_data_Pkw="data/emobility/Pkw__count",
-        temp_air_total="resources/temp_air_total_elec_s{simpl}_{clusters}.nc"
+        temp_air_total="resources/temp_air_total_elec_s{simpl}_{clusters}.nc",
     output: 
         transport_demand="resources/transport_demand_s{simpl}_{clusters}.csv",
         transport_data="resources/transport_data_s{simpl}_{clusters}.csv",
@@ -499,15 +458,6 @@ rule build_transport_demand:
     resources: mem_mb=2000
     script: "scripts/build_transport_demand.py"
 
-rule scale_transport_demand:
-    input:
-        transport_demand_unscaled="resources/transport_demand_s{simpl}_{clusters}_unscaled.csv",
-        transport_scaling="scaling/transport_scaling.csv"
-    output:
-        transport_demand="resources/transport_demand_s{simpl}_{clusters}.csv"
-    threads: 1
-    resources: mem_mb = 2000
-    script: "scripts/scale_transport_demand.py"
 
 rule prepare_sector_network:
     input:
@@ -706,7 +656,7 @@ if config["foresight"] == "myopic":
             overrides="data/override_component_attrs",
             network=RDIR + "/prenetworks-brownfield/elec_s{simpl}_{clusters}_lv{lv}_{opts}_{sector_opts}_{planning_horizons}.nc",
             costs=CDIR + "costs_{planning_horizons}.csv",
-            config=SDIR + "/configs/config.yaml"
+            config=SDIR + '/configs/config.yaml'
         output: RDIR + "/postnetworks/elec_s{simpl}_{clusters}_lv{lv}_{opts}_{sector_opts}_{planning_horizons}.nc"
         shadow: "shallow"
         log:
