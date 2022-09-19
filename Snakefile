@@ -455,7 +455,7 @@ rule scale_pop_weighted_energy_totals:
         pop_weighted_energy_totals_unscaled = "resources/pop_weighted_energy_totals_unscaled_s{simpl}_{clusters}.csv",
         scaling = "scaling/{scal}/pop_weighted_energy_totals_scaling.csv"
     output: "resources/pop_weighted_energy_totals_sc_{scal}_s{simpl}_{clusters}.csv"
-    threads: 1 
+    threads: 1
     resources: mem_mb=1000
     script: "scripts/scale_pop_weighted_energy_totals.py"
 
@@ -467,19 +467,11 @@ rule build_transport_demand:
         traffic_data_KFZ="data/emobility/KFZ__count",
         traffic_data_Pkw="data/emobility/Pkw__count",
         temp_air_total="resources/temp_air_total_elec_s{simpl}_{clusters}.nc",
-<<<<<<< HEAD
     output:
-        transport_demand="resources/transport_demand_s{simpl}_{clusters}.csv",
-        transport_data="resources/transport_data_s{simpl}_{clusters}.csv",
-        avail_profile="resources/avail_profile_s{simpl}_{clusters}.csv",
-        dsm_profile="resources/dsm_profile_s{simpl}_{clusters}.csv"
-=======
-    output: 
         transport_demand="resources/transport_demand_sc_{scal}_s{simpl}_{clusters}.csv",
         transport_data="resources/transport_data_sc_{scal}_s{simpl}_{clusters}.csv",
         avail_profile="resources/avail_profile_sc_{scal}_s{simpl}_{clusters}.csv",
         dsm_profile="resources/dsm_profile_sc_{scal}_s{simpl}_{clusters}.csv"
->>>>>>> demand-scaling
     threads: 1
     resources: mem_mb=2000
     script: "scripts/build_transport_demand.py"
@@ -489,20 +481,11 @@ rule prepare_sector_network:
         overrides="data/override_component_attrs",
         network=pypsaeur('networks/elec_s{simpl}_{clusters}_ec_lv{lv}_{opts}.nc'),
         energy_totals_name='resources/energy_totals.csv',
-<<<<<<< HEAD
-        eurostat=input_eurostat,
-        pop_weighted_energy_totals="resources/pop_weighted_energy_totals_s{simpl}_{clusters}.csv",
-        transport_demand="resources/transport_demand_s{simpl}_{clusters}.csv",
-        transport_data="resources/transport_data_s{simpl}_{clusters}.csv",
-        avail_profile="resources/avail_profile_s{simpl}_{clusters}.csv",
-        dsm_profile="resources/dsm_profile_s{simpl}_{clusters}.csv",
-=======
         pop_weighted_energy_totals="resources/pop_weighted_energy_totals_sc_{scal}_s{simpl}_{clusters}.csv",
         transport_demand="resources/transport_demand_sc_{scal}_s{simpl}_{clusters}.csv",
         transport_data="resources/transport_data_sc_{scal}_s{simpl}_{clusters}.csv",
         avail_profile="resources/avail_profile_sc_{scal}_s{simpl}_{clusters}.csv",
         dsm_profile="resources/dsm_profile_sc_{scal}_s{simpl}_{clusters}.csv",
->>>>>>> demand-scaling
         co2_totals_name='resources/co2_totals.csv',
         co2="data/eea/UNFCCC_v23.csv",
         biomass_potentials='resources/biomass_potentials_s{simpl}_{clusters}.csv',

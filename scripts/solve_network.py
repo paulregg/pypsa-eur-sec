@@ -296,12 +296,6 @@ if __name__ == "__main__":
     if tmpdir is not None:
         from pathlib import Path
         Path(tmpdir).mkdir(parents=True, exist_ok=True)
-<<<<<<< HEAD
-=======
-    #print(snakemake.wildcards)
-    #print(snakemake.wildcards.opts)
-    #print(snakemake.wildcards.sector_opts.split('-'))
->>>>>>> demand-scaling
     opts = snakemake.wildcards.sector_opts.split('-')
     solve_opts = snakemake.config['solving']['options']
 

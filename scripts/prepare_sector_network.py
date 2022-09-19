@@ -399,7 +399,7 @@ def add_carrier_buses(n, carrier, nodes=None):
     )
 
     #capital cost could be corrected to e.g. 0.2 EUR/kWh * annuity and O&M
-    
+
     if snakemake.config["sector"]["set_gas_limit"] and carrier == "gas":
         n.madd("Store",
             nodes + " Store",
@@ -410,9 +410,9 @@ def add_carrier_buses(n, carrier, nodes=None):
             marginal_cost=costs.at[carrier, 'fuel'],
             carrier=carrier,
         )
-        
+
         print("adding gas limit of",snakemake.config["sector"]["gas_limit"]/1e6,"TWh")
-        
+
     else:
         n.madd("Store",
             nodes + " Store",
@@ -1207,18 +1207,18 @@ def add_land_transport(n, costs):
     number_cars = pd.read_csv(snakemake.input.transport_data, index_col=0)["number cars"]
     avail_profile = pd.read_csv(snakemake.input.avail_profile, index_col=0, parse_dates=True)
     dsm_profile = pd.read_csv(snakemake.input.dsm_profile, index_col=0, parse_dates=True)
-    
+
     if not snakemake.config["sector"]["use_scenario_fuel_fractions"]:
         fuel_cell_share = get(options["land_transport_fuel_cell_share"], investment_year)
         electric_share = get(options["land_transport_electric_share"], investment_year)
-        
+
     else:
         scen = snakemake.wildcards.scal
         fuel_cell_share = snakemake.config["sector"]["fuel_fractions"][scen]["land_transport_fuel_cell_share"]
         electric_share = snakemake.config["sector"]["fuel_fractions"][scen]["land_transport_electric_share"]
-        
-        
-    ice_share = 1 - fuel_cell_share - electric_share    
+
+
+    ice_share = 1 - fuel_cell_share - electric_share
 
     print("FCEV share", fuel_cell_share)
     print("EV share", electric_share)
@@ -1369,7 +1369,7 @@ def build_heat_demand(n):
     electric_heat_supply = pd.concat(electric_heat_supply, axis=1)
     print("BUILD HEAT DEMAND")
     print("total heat : ", heat_demand.sum().sum()/1e6)
-    
+
 
     # subtract from electricity load since heat demand already in heat_demand
     electric_nodes = n.loads.index[n.loads.carrier == "electricity"]
@@ -2118,13 +2118,13 @@ def add_industry(n, costs):
 
     all_navigation = ["total international navigation", "total domestic navigation"]
     efficiency = options['shipping_average_efficiency'] / costs.at["fuel cell", "efficiency"]
-    
+
     if not snakemake.config["sector"]["use_scenario_fuel_fractions"]:
         shipping_hydrogen_share = get(options['shipping_hydrogen_share'], investment_year)
     else:
         scen = snakemake.wildcards.scal
         shipping_hydrogen_share = snakemake.config["sector"]["fuel_fractions"][scen]["shipping_hydrogen_share"]
-    
+
     p_set = shipping_hydrogen_share * pop_weighted_energy_totals.loc[nodes, all_navigation].sum(axis=1) * 1e6 * efficiency / 8760
 
     n.madd("Load",
@@ -2367,8 +2367,8 @@ def add_agriculture(n, costs):
     else:
         scen = snakemake.wildcards.scal
         electric_share = snakemake.config["sector"]["fuel_fractions"][scen]["agriculture_machinery_electric_share"]
-    
-    
+
+
     assert electric_share <= 1.
     ice_share = 1 - electric_share
 
@@ -2490,12 +2490,12 @@ def flatten_loads(n):
     ]
     return n
     #if snakemake.config["sector"]["flatten_loads"]:
-    
+
     #else:
-    
-    
-    
-    
+
+
+
+
 
 #%%
 if __name__ == "__main__":
@@ -2536,7 +2536,7 @@ if __name__ == "__main__":
     pop_weighted_energy_totals = pd.read_csv(snakemake.input.pop_weighted_energy_totals, index_col=0)
 
     patch_electricity_network(n)
-    
+
     spatial = define_spatial(pop_layout.index, options)
 
     if snakemake.config["foresight"] == 'myopic':
@@ -2550,9 +2550,9 @@ if __name__ == "__main__":
     add_co2_tracking(n, options)
 
     add_generation(n, costs)
-    
+
     add_storage_and_grids(n, costs)
-    
+
     # TODO merge with opts cost adjustment below
     for o in opts:
         if o[:4] == "wave":
@@ -2570,7 +2570,7 @@ if __name__ == "__main__":
 
     if "T" in opts:
         add_land_transport(n, costs)
-    
+
     if "H" in opts:
         add_heat(n, costs)
 
@@ -2579,7 +2579,7 @@ if __name__ == "__main__":
 
     if "I" in opts:
         add_industry(n, costs)
-    
+
     if "I" in opts and "H" in opts:
         add_waste_heat(n)
 
@@ -2645,10 +2645,5 @@ if __name__ == "__main__":
     if options['electricity_grid_connection']:
         add_electricity_grid_connection(n, costs)
 
-<<<<<<< HEAD
     n.meta = dict(snakemake.config, **dict(wildcards=dict(snakemake.wildcards)))
-=======
-    demand_side_functions()
-
->>>>>>> demand-scaling
     n.export_to_netcdf(snakemake.output[0])
