@@ -2477,8 +2477,60 @@ def scale_residual_elec_demand(n):
             factor = scaling.loc["all_countries","scale"]
         n.loads_t.p_set[loads_i] *= factor
 
-def demand_side_functions():
-    return -1
+def flatten(n,carrier,flatscale):
+# timeseries becomes: timeseries*(1-FLATSCALE) + year_avg*FLATSCALE
+    for ct in n.buses.country.dropna().unique():
+        # TODO map onto n.bus.country
+        loads_i = n.loads.index[(n.loads.index.str[:2] == ct) & (n.loads.carrier == carrier)]
+        loads_i = n.loads_t.p_set.columns.intersection(loads_i)
+        #if not loads_i in n.loads_t.p_set.columns : continue
+        if n.loads_t.p_set[loads_i].empty: continue
+        if snakemake.config["sector"]["flatten_loads"]:
+            #print(loads_i)
+            avg = pd.DataFrame(index  = n.loads_t.p_set[loads_i].index, columns = n.loads_t.p_set[loads_i].columns)
+            for c in avg.columns:
+                avg.loc[:,c] = n.loads_t.p_set[c].multiply(n.snapshot_weightings["generators"]).sum()/8760
+
+            n.loads_t.p_set[loads_i] = flatscale*avg + (1-flatscale)*n.loads_t.p_set[loads_i]
+            
+def smoothen(df,window):
+    dfc = df.copy()
+    dfc_tot = dfc
+    for i in range(1,int(window/2)+1):
+        dfc_tot = dfc_tot + cycling_shift(dfc,i)
+        #print(i,dfc_tot.sum())
+    for i in range(1,int((window-1)/2)+1):
+        dfc_tot = dfc_tot + cycling_shift(dfc,-1*i)
+        #print(-1*i,dfc_tot.sum())
+    dfc_tot = dfc_tot / window
+    return dfc_tot
+
+def flatten_heat(n,carrier):
+# Performs moving average over a period of FLATSCALE*year (i.e., 0.08333333 ~= 1 month window)
+    for ct in n.buses.country.dropna().unique():
+        # TODO map onto n.bus.country
+        loads_i = n.loads.index[(n.loads.index.str[:2] == ct) & (n.loads.carrier == carrier)]
+        loads_i = n.loads_t.p_set.columns.intersection(loads_i)
+        #if not loads_i in n.loads_t.p_set.columns : continue
+        if n.loads_t.p_set[loads_i].empty: continue
+        if snakemake.config["sector"]["flatten_loads"]:        
+            n.loads_t.p_set[loads_i] = smoothen(n.loads_t.p_set[loads_i],n.snapshots.size*snakemake.config["sector"]["heat_flattening"])
+
+def flatten_all_heat(n):
+    print("Reducing all heat peaks by smoothing of ", snakemake.config["sector"]["heat_flattening"]*365*24, " hours")
+    carriers = n.loads.carrier.unique()
+    heat_names = [c for c in carriers if "heat" in c]
+    for h in heat_names:
+        print(h)
+        flatten_heat(n,h)
+        
+def flatten_all_elec(n):
+    print("Reducing all electricity peaks by factor of ", snakemake.config["sector"]["elec_flattening"])
+    carriers = n.loads.carrier.unique()
+    elec_names = [c for c in carriers if "electric" in c or "EV" in c]
+    for e in elec_names:
+        print(e)
+        flatten(n,e,snakemake.config["sector"]["elec_flattening"])
 
 def flatten_loads(n):
     heat_systems = [
@@ -2488,6 +2540,9 @@ def flatten_loads(n):
         "services urban decentral",
         "urban central"
     ]
+    
+    flatten_all_heat(n)
+    flatten_all_elec(n)
     return n
     #if snakemake.config["sector"]["flatten_loads"]:
 
@@ -2644,6 +2699,9 @@ if __name__ == "__main__":
 
     if options['electricity_grid_connection']:
         add_electricity_grid_connection(n, costs)
+        
+    if snakemake.config["sector"]["flatten_loads"]:
+        flatten_loads(n)
 
     n.meta = dict(snakemake.config, **dict(wildcards=dict(snakemake.wildcards)))
     n.export_to_netcdf(snakemake.output[0])
