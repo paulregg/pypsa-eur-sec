@@ -2427,7 +2427,13 @@ def maybe_adjust_costs_and_potentials(n, opts):
         carrier_list = np.hstack((n.generators.carrier.unique(), n.links.carrier.unique(),
                                 n.stores.carrier.unique(), n.storage_units.carrier.unique()))
         suptechs = map(lambda c: c.split("-", 2)[0], carrier_list)
-        if oo[0].startswith(tuple(suptechs)):
+        
+        tuple_suptechs = tuple(suptechs)
+
+        print("\n\n\nadjusting costs?????",any([l.endswith(oo[0]) for l in tuple_suptechs]))
+        
+        if (oo[0].startswith(tuple_suptechs) or any([l.endswith(oo[0]) for l in tuple_suptechs])):
+            print("entering if statement")
             carrier = oo[0]
             attr_lookup = {"p": "p_nom_max", "e": "e_nom_max", "c": "capital_cost"}
             attr = attr_lookup[oo[1][0]]
@@ -2448,8 +2454,9 @@ def maybe_adjust_costs_and_potentials(n, opts):
                     else:
                         sel = c.df.carrier.str.contains(carrier)
                     c.df.loc[sel,attr] *= factor
+                    
             print("changing", attr , "for", carrier, "by factor", factor)
-
+            print(c.df.loc[sel,attr])
 
 # TODO this should rather be a config no wildcard
 def limit_individual_line_extension(n, maxext):
