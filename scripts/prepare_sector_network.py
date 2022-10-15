@@ -589,6 +589,15 @@ def add_co2limit(n, Nyears=1., limit=0.):
         constant=co2_limit
     )
 
+def add_co2price(n,price=0.):
+    logger.info(f"Adding CO2 price of {price} EUR/tCO2")
+    for c in n.iterate_components(["Store"]):
+        carrier ="co2"
+        sel = c.df.carrier.str.contains(carrier)
+        c.df.loc[sel,"capital_cost"] = price
+    #n.carriers.loc['co2']['color'] = '#8A2626'
+    #n.carriers.loc['co2']['nice_name'] = '#Co2 Costs'
+
 # TODO PyPSA-Eur merge issue
 def average_every_nhours(n, offset):
     logger.info(f'Resampling the network to {offset}')
@@ -1198,7 +1207,7 @@ def add_storage_and_grids(n, costs):
         )
 
 
-def add_land_transport(n, costs):
+def add_land_transport(n, costs, opts=[]):
     # TODO options?
 
     logger.info("Add land transport")
@@ -1219,6 +1228,18 @@ def add_land_transport(n, costs):
 
 
     ice_share = 1 - fuel_cell_share - electric_share
+
+    if opts:
+        for o in opts:
+            if not "iceshare" in o: continue
+            print("Adjusting land transport fuel share based on wildcard : ", o)
+            old_elec = electric_share
+            old_fcev = fuel_cell_share
+            ice_share = float(o[8:])
+            fuel_cell_share = (1-ice_share)*old_fcev/(old_fcev+old_elec)
+            electric_share = (1-ice_share)*old_elec/(old_fcev+old_elec)
+
+                
 
     print("FCEV share", fuel_cell_share)
     print("EV share", electric_share)
@@ -2433,9 +2454,8 @@ def maybe_adjust_costs_and_potentials(n, opts):
         print("\n\n\nadjusting costs?????",any([l.endswith(oo[0]) for l in tuple_suptechs]))
         
         if (oo[0].startswith(tuple_suptechs) or any([l.endswith(oo[0]) for l in tuple_suptechs])):
-            print("entering if statement")
             carrier = oo[0]
-            attr_lookup = {"p": "p_nom_max", "e": "e_nom_max", "c": "capital_cost"}
+            attr_lookup = {"p": "p_nom_max", "e": "e_nom_max", "c": "capital_cost","m": "marginal_cost"}
             attr = attr_lookup[oo[1][0]]
             factor = float(oo[1][1:])
             #beware if factor is 0 and p_nom_max is np.inf, 0*np.inf is nan
@@ -2446,14 +2466,30 @@ def maybe_adjust_costs_and_potentials(n, opts):
                     comps = {"Generator", "Link", "StorageUnit"}
                 elif attr == 'e_nom_max':
                     comps = {"Store"}
-                else:
+                elif attr == 'capital_cost':
                     comps = {"Generator", "Link", "StorageUnit", "Store"}
+                else:
+                    comps = {"Generator"}
                 for c in n.iterate_components(comps):
                     if carrier=='solar':
                         sel = c.df.carrier.str.contains(carrier) & ~c.df.carrier.str.contains("solar rooftop")
                     else:
                         sel = c.df.carrier.str.contains(carrier)
+                        
+                    if attr == "e_nom_max" and not any(c.df.loc[[i for i in c.df.index if c.df.loc[i,'carrier']==carrier]]['e_nom_extendable']):
+                        attr = ['e_nom','e_initial']
+                    
+                        
                     c.df.loc[sel,attr] *= factor
+                    if attr=="p_nom_max":
+                        if np.any([c.df.p_nom_max < c.df.p_nom_min]):
+                            replace_i = [i for i in c.df.index if c.df.loc[i]['p_nom_max'] < c.df.loc[i]['p_nom_min']]
+                            print(c.df.loc[replace_i,'p_nom_max'])
+                            c.df.loc[replace_i,'p_nom_max'] = c.df.loc[replace_i]['p_nom_min']
+                            print(c.df.loc[replace_i,'p_nom_max'])
+                            print("WARNING : max capacity would be lower than min capacity for carrier " + carrier + " for nodes:")
+                            print(replace_i)
+                            print("p_nom_max will be set to p_nom_min for these nodes")
                     
             print("changing", attr , "for", carrier, "by factor", factor)
             print(c.df.loc[sel,attr])
@@ -2556,6 +2592,70 @@ def flatten_loads(n):
     #else:
 
 
+def set_mins_from_optimized(n, optim_filename,ratio,extendable=True):
+    
+    print("Setting minimum capacities from previous network : ")
+    print(optim_filename)
+    
+    n_optim = pypsa.Network(optim_filename)
+    
+    links = n.links.loc[n.links.p_nom_extendable].carrier.unique()
+    conventionals = ['gas','water tanks','OCGT','CHP', 'resistive heater','emissions','oil','co2','biomass','grid','DC','H2','heat']
+    all_conventionals = [link for link in links if any([c in link for c in conventionals])]
+    conventional_index = [i for i in n.links.index if n.links.loc[i,'carrier'] in all_conventionals]
+    fuel_gens = [g for g in n.generators.index if any([c in g for c in conventionals])]
+    fuel_stores = [g for g in n.stores.index if any([c in g for c in conventionals])]
+
+    
+    # set links potential 
+    #(DC links, but also all units which convert one form of energy to another)
+    links_dc_i = n.links.index[n.links.p_nom_extendable]
+    links_limit = links_dc_i.difference(conventional_index)
+
+    n.links.loc[links_limit, "p_nom_min"] = pd.concat([ratio * n_optim.links.loc[links_limit,"p_nom_opt"],n.links.loc[links_limit,"p_nom_min"]],axis=1).max(axis=1)#.reindex( gen_extend_i, fill_value=0.0)
+    if not extendable:
+        n.links.loc[links_limit, "p_nom_max"] = pd.concat([ratio * n_optim.links.loc[links_limit,"p_nom_opt"],n.links.loc[links_limit,"p_nom_min"]],axis=1).max(axis=1)#.reindex( gen_extend_i, fill_value=0.0)
+
+
+    #n.links.loc[links_limit, "p_nom_max"] = ratio * n_optim.links.loc[links_limit,"p_nom_opt"]#.reindex(links_dc_i, fill_value=0.0)
+    #n.links.loc[links_dc_i, "p_nom_extendable"] = extendable
+    #n.links.loc[conventional_index, "p_nom_extendable"] = True
+
+
+    # set generators potential
+    gen_extend_i = n.generators.index[n.generators.p_nom_extendable]
+    gen_limits = n.generators.index[n.generators.p_nom_extendable].difference(fuel_gens)
+
+    
+    
+    n.generators.loc[gen_limits, "p_nom_min"] = pd.concat([ratio * n_optim.generators.loc[gen_limits,"p_nom_opt"],n.generators.loc[gen_limits,"p_nom_min"]],axis=1).max(axis=1)#.reindex( gen_extend_i, fill_value=0.0)
+    if not extendable:
+        n.generators.loc[gen_limits, "p_nom_max"] = pd.concat([ratio * n_optim.generators.loc[gen_limits,"p_nom_opt"],n.generators.loc[gen_limits,"p_nom_min"]],axis=1).max(axis=1)#.reindex( gen_extend_i, fill_value=0.0)
+
+    #n.generators.loc[gen_extend_i, "p_nom_extendable"] = extendable
+    #n.generators.loc[fuel_gens, "p_nom_extendable"] = True
+
+
+    # set storage unit and storage potential 
+    # STORAGE UNITS ARENT EXTENDABLE TO BEGIN WITH
+#    stor_units_extend_i = n.storage_units.index[n.storage_units.p_nom_extendable]
+#    n.storage_units.loc[stor_units_extend_i, "p_nom_min"] = ratio * n_optim.storage_units[
+#        "p_nom_opt"
+#    ].reindex(stor_units_extend_i, fill_value=0.0)
+#    n.storage_units.loc[stor_units_extend_i, "p_nom_extendable"] = extendable
+
+    stor_extend_i = n.stores.index[n.stores.e_nom_extendable]
+    store_limits = n.stores.index[n.stores.e_nom_extendable].difference(fuel_stores)
+    n.stores.loc[store_limits, "e_nom_min"] = pd.concat([ratio * n_optim.stores.loc[store_limits,"e_nom_opt"],n.stores.loc[store_limits,"e_nom_min"]],axis=1).max(axis=1)#.reindex( gen_extend_i, fill_value=0.0)
+    if not extendable:
+        n.stores.loc[store_limits, "e_nom_max"] = pd.concat([ratio * n_optim.stores.loc[store_limits,"e_nom_opt"],n.stores.loc[store_limits,"e_nom_min"]],axis=1).max(axis=1)#.reindex( gen_extend_i, fill_value=0.0)
+
+    #n.stores.loc[store_limits, "e_nom_max"] = ratio * n_optim.stores.loc[store_limits,"e_nom_opt"]#.reindex(stor_extend_i, fill_value=0.0)
+    #n.stores.loc[stor_extend_i, "e_nom_extendable"] = extendable
+    #n.stores.loc[fuel_stores, "e_nom_extendable"] = True
+
+
+    return n
 
 
 
@@ -2631,7 +2731,7 @@ if __name__ == "__main__":
         options["district_heating"]["progress"] = 0.0
 
     if "T" in opts:
-        add_land_transport(n, costs)
+        add_land_transport(n, costs,opts)
 
     if "H" in opts:
         add_heat(n, costs)
@@ -2686,9 +2786,19 @@ if __name__ == "__main__":
         limit_type = "wildcard"
         limit = o[o.find("Co2L")+4:]
         limit = float(limit.replace("p", ".").replace("m", "-"))
+        print("Add CO2 limit from", limit_type)
+        add_co2limit(n, Nyears, limit)
         break
-    print("Add CO2 limit from", limit_type)
-    add_co2limit(n, Nyears, limit)
+
+    for o in opts:
+        if not "Co2P" in o: continue
+        limit_type = "wildcard"
+        price = o[o.find("Co2P")+4:]
+        price = float(price)
+        print("Add CO2 price from", limit_type)
+        add_co2price(n, price)
+        break
+    
 
     for o in opts:
         if not o[:10] == 'linemaxext': continue
@@ -2709,6 +2819,13 @@ if __name__ == "__main__":
         
     if snakemake.config["sector"]["flatten_loads"]:
         flatten_loads(n)
+        
+    if snakemake.config["sector"]["minimum_capacities"]["set_min_capacities"]:
+        print("Setting minimum capacities...\n")
+        net_mins_name = snakemake.config["sector"]["minimum_capacities"]["network_for_mins"]
+        net_mins_ratio = snakemake.config["sector"]["minimum_capacities"]["min_cap_ratios"]
+        net_mins_extendable = snakemake.config["sector"]["minimum_capacities"]["extendable"]
+        n = set_mins_from_optimized(n,net_mins_name,net_mins_ratio,net_mins_extendable)
 
     n.meta = dict(snakemake.config, **dict(wildcards=dict(snakemake.wildcards)))
     n.export_to_netcdf(snakemake.output[0])

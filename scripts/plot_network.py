@@ -168,7 +168,8 @@ def plot_map(network, components=["links", "stores", "storage_units", "generator
 
     fig, ax = plt.subplots(subplot_kw={"projection": ccrs.PlateCarree()})
     fig.set_size_inches(7, 6)
-
+    print("bus_size indices:")
+    print(costs.index.get_level_values(1).unique())
     n.plot(
         bus_sizes=costs / bus_size_factor,
         bus_colors=snakemake.config['plotting']['tech_colors'],

@@ -1,0 +1,206 @@
+10c10
+< run: your-run-name  # use this to keep track of runs with different settings
+---
+> run: test_pypsa_updates  # use this to keep track of runs with different settings
+18,19c18
+<     - 1.0
+<     - 1.5
+---
+>     - opt
+21,22c20,24
+<     - 45
+<     - 50
+---
+>     - 37
+> #    - 64
+> #    - 96
+> #    - 128
+> #    - 256
+24a27,89
+>   scal:
+>     - noscaling
+>     # - elecsweep_1of10
+>     # - elecsweep_2of10
+>     # - elecsweep_3of10
+>     # - elecsweep_4of10
+>     # - elecsweep_5of10
+>     # - elecsweep_6of10
+>     # - elecsweep_7of10
+>     # - elecsweep_8of10
+>     # - elecsweep_9of10
+>     # - elecsweep_10of10
+>     # - heatsweep_1of10
+>     # - heatsweep_2of10
+>     # - heatsweep_3of10
+>     # - heatsweep_4of10
+>     # - heatsweep_5of10
+>     # - heatsweep_6of10
+>     # - heatsweep_7of10
+>     # - heatsweep_8of10
+>     # - heatsweep_9of10
+>     # - heatsweep_10of10
+>     # - indsweep_1of10
+>     # - indsweep_2of10
+>     # - indsweep_3of10
+>     # - indsweep_4of10
+>     # - indsweep_5of10
+>     # - indsweep_6of10
+>     # - indsweep_7of10
+>     # - indsweep_8of10
+>     # - indsweep_9of10
+>     # - indsweep_10of10       
+>     # - transportsweep_1of10
+>     # - transportsweep_2of10
+>     # - transportsweep_3of10
+>     # - transportsweep_4of10
+>     # - transportsweep_5of10
+>     # - transportsweep_6of10
+>     # - transportsweep_7of10
+>     # - transportsweep_8of10
+>     # - transportsweep_9of10
+>     # - transportsweep_10of10    
+>     #- Tango
+>     # - dallfreightaviation
+>     # - dallfreighttransport
+>     # - dallindustry
+>     # - dallnavigation
+>     # - dallpassengeraviation
+>     # - dallpassengertransport
+>     # - ddomesticheat
+>     # - delec
+>     # - dserviceheat
+>     # - Grubler_1of10
+>     # - Grubler_2of10
+>     # - Grubler_3of10
+>     # - Grubler_4of10
+>     # - Grubler_5of10
+>     # - Grubler_6of10
+>     # - Grubler_7of10
+>     # - Grubler_8of10
+>     # - Grubler_9of10
+>     # - Grubler_10of10
+> 
+26c91,101
+<     - Co2L0-3H-T-H-B-I-A-solar+p3-dist1
+---
+>     - Co2L0p10-193H-T-H-B-I-A-seq2e8
+> #    - Co2L0p00-193H-T-H-B-I-A-seq3e8
+> #    - Co2L0p00-193H-T-H-B-I-A-seq2e8
+> #    - Co2L0p01-193H-T-H-B-I-A-seq4e8
+> #    - Co2L0p01-193H-T-H-B-I-A-seq3e8
+> #    - Co2L0p01-193H-T-H-B-I-A-seq2e8
+> #    - Co2L0p02-193H-T-H-B-I-A-seq4e8
+> #    - Co2L0p02-193H-T-H-B-I-A-seq3e8
+> #    - Co2L0p02-193H-T-H-B-I-A-seq2e8
+>     #- Co2L0p00-193H-T-H-B-I-A-seq1e9
+>     
+44,50c119,135
+<     - 2030
+<   # for example, set to
+<   # - 2020
+<   # - 2030
+<   # - 2040
+<   # - 2050
+<   # for myopic foresight
+---
+>     - 2050
+>   # for example, set to [2020, 2030, 2040, 2050] for myopic foresight
+> 
+> scaling:
+>     heat:
+>         by_nation: false
+>     industry:
+>         by_nation: false
+>         by_sector: true
+>     transport:
+>         by_nation: false
+>     energy_totals:
+>         by_nation: false
+>         by_sector: true
+>     elec:
+>         by_nation: false
+> 
+142,143c227
+<   grouping_years_power: [1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025, 2030]
+<   grouping_years_heat: [1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2019] # these should not extend 2020
+---
+>   grouping_years: [1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025, 2030]
+181c265
+<   land_transport_fuel_cell_share: 0.15 # 1 means all FCEVs
+---
+>   land_transport_fuel_cell_share: 0.2 # 1 means all FCEVs
+186c270
+<   land_transport_electric_share: 0.85 # 1 means all EVs
+---
+>   land_transport_electric_share: 0.8 # 1 means all EVs
+193c277
+<   agriculture_machinery_electric_share: 0
+---
+>   agriculture_machinery_electric_share: 1
+209c293
+<   reduce_space_heat_exogenously: true  # reduces space heat demand by a given factor (applied before losses in DH)
+---
+>   reduce_space_heat_exogenously: false  # reduces space heat demand by a given factor (applied before losses in DH)
+212c296
+<   reduce_space_heat_exogenously_factor: 0.29 # per unit reduction in space heat demand
+---
+>   reduce_space_heat_exogenously_factor: 0 #0.29 # per unit reduction in space heat demand
+234d317
+<   biomass_boiler: true
+242d324
+<   coal_cc: false
+244c326
+<   co2_vent: false
+---
+>   co2_vent: true
+273,277c355,384
+<   biomass_to_liquid: false
+<   biosng: false
+< 
+< 
+< 
+---
+>   set_gas_limit: false
+>   gas_limit: 461000000
+>   use_scenario_fuel_fractions: false
+>   fuel_fractions:
+>     LTS_Baseline:
+>       land_transport_electric_share: 0.343377
+>       land_transport_fuel_cell_share: 0.092321
+>       agriculture_machinery_electric_share: 0.5
+>       shipping_hydrogen_share: 0.5
+>     Tech:
+>       land_transport_electric_share: 0.518092
+>       land_transport_fuel_cell_share: 0.298562
+>       agriculture_machinery_electric_share: 1
+>       shipping_hydrogen_share: 1
+>     Life:
+>       land_transport_electric_share: 0.415205
+>       land_transport_fuel_cell_share: 0.099067
+>       agriculture_machinery_electric_share: 0.5
+>       shipping_hydrogen_share: 0.5
+>     Tango:
+>       land_transport_electric_share: 0.617031
+>       land_transport_fuel_cell_share: 0.307819
+>       agriculture_machinery_electric_share: 1
+>       shipping_hydrogen_share: 1
+>   flatten_loads: false
+>   elec_flattening: 0
+>   heat_flattening: 0  
+>   
+>   
+>   
+281c388
+<     # 2025: 0.55
+---
+>     # 2025: 0.55H
+377c484
+<     threads: 4
+---
+>     threads: 16
+497a605
+> 
+522,524d629
+<     biomass boiler: '#8A9A5B'
+<     biomass to liquid: '#32CD32'
+<     BioSNG: '#123456'

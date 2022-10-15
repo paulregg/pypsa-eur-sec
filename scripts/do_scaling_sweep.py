@@ -11,9 +11,9 @@ import shutil
 import numpy as np
 
 
-STEPS = 10
+STEPS = 24
 noscaling_dir = "noscaling"
-scaling_dir = "transportsweep"
+scaling_dir = "Tango"
 
 files = {}
 for f in glob.glob("../scaling/"+scaling_dir+"/*.csv"):
