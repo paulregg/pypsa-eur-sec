@@ -2476,7 +2476,7 @@ def maybe_adjust_costs_and_potentials(n, opts):
                     else:
                         sel = c.df.carrier.str.contains(carrier)
                         
-                    if attr == "e_nom_max" and not any(c.df.loc[[i for i in c.df.index if c.df.loc[i,'carrier']==carrier]]['e_nom_extendable']):
+                    if attr == "e_nom_max" and not any(c.df.loc[[i for i in c.df.index if carrier in c.df.loc[i,'carrier']]]['e_nom_extendable']):
                         attr = ['e_nom','e_initial']
                     
                         
